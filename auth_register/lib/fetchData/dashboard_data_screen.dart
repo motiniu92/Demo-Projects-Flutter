@@ -1,3 +1,6 @@
+import 'dart:core';
+import 'dart:core';
+
 import 'package:auth_register/fetchData/dashboard_bloc.dart';
 import 'package:auth_register/fetchData/dashboard_data_response_model.dart';
 import 'package:auth_register/fetchData/dashboard_event.dart';
@@ -18,6 +21,12 @@ class DashboardDataScreen extends StatefulWidget {
 class _DashboardDataScreenState extends State<DashboardDataScreen> {
   final DashboardBloc _dashboardBloc = DashboardBloc();
   final DashboardMultipleBloc _dashboardMultipleBloc = DashboardMultipleBloc();
+
+  String? name;
+  String? email;
+  String? jobCount;
+  String? allJobs;
+
 
   @override
   void initState() {
@@ -57,20 +66,25 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
                       } else if (state is DashboardCountLoading) {
                         return _buildLoading();
                       } else if (state is DashboardCountMultipleDataLoaded) {
+                          jobCount = state.dashboardDataResponse.jobCount.toString();
+                          allJobs = state.dashboardDataResponse.myJobs.toString();
+                          print('JobCountAndMyJobs....:'+ jobCount! +" , "+ allJobs!);
                         return Container(
-                          width: 350,
-                            child: Card(
-                              child: Column(
-                                children: [
-                                  Text(
-                                      state.dashboardDataResponse.jobCount.toString(), style: TextStyle(fontSize: 30),),
-                                  Text(
-                                      state.dashboardDataResponse.nearByJobs.toString(), style: TextStyle(fontSize: 30),),
-                                  Text(
-                                      state.dashboardDataResponse.myJobs.toString(), style: TextStyle(fontSize: 30),),
-                                ],
-                              ),
-                            ));
+                          // width: 350,
+                          //   child: Card(
+                          //     child: Column(
+                          //       children: [
+
+                          //         Text(
+                          //             state.dashboardDataResponse.jobCount.toString(), style: TextStyle(fontSize: 30),),
+                          //         Text(
+                          //             state.dashboardDataResponse.nearByJobs.toString(), style: TextStyle(fontSize: 30),),
+                          //         Text(
+                          //             state.dashboardDataResponse.myJobs.toString(), style: TextStyle(fontSize: 30),),
+                          //       ],
+                          //     ),
+                          //   )
+                        );
                       } else if (state is DashboardCountError) {
                         return Container();
                       } else {
@@ -110,7 +124,13 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
               } else if (state is DashboardLoading) {
                 return _buildLoading();
               } else if (state is DashboardLoaded) {
-                return _buildCard(context, state.dashboardDataResponse);
+
+                  name = state.dashboardDataResponse.name.toString();
+                  email = state.dashboardDataResponse.email.toString();
+                  print('NameAndEmail....:'+ name! +" , "+ email!);
+
+                return
+                  _buildCard(context, state.dashboardDataResponse);
               } else if (state is DashboardError) {
                 return Container();
               } else {
@@ -125,29 +145,50 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
 
   Widget _buildCard(BuildContext context, DashboardDataResponse model) {
     return Container(
-      height: 450,
-      child: ListView.builder(
-        itemCount: model.name.toString().length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.all(8.0),
-            child: Card(
-              child: Container(
-                margin: EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text("Country: ${model.name.toString()}"),
-                    Text("Total Confirmed: ${model.email}"),
-                    Text("Total Deaths: ${model.mobile}"),
-                    Text("Total Recovered: ${model.gender}"),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+      height: 250,
+      margin: EdgeInsets.all(8.0),
+      child: Card(
+        child: Container(
+          margin: EdgeInsets.all(8.0),
+          child: Column(
+            children: <Widget>[
+              Text("Country: ${model.name.toString()}"),
+              Text("Total Confirmed: ${model.email}"),
+              Text("Total Deaths: ${model.mobile}"),
+              Text("Total Recovered: ${model.gender}"),
+              Text("jobCount: ${jobCount.toString()}"),
+              Text("myJobs: ${allJobs.toString()}"),
+            ],
+          ),
+        ),
       ),
     );
+
+    //   Container(
+    //   height: 450,
+    //   child: ListView.builder(
+    //     itemCount: model.name.toString().length,
+    //     itemBuilder: (context, index) {
+    //       return Container(
+    //         margin: EdgeInsets.all(8.0),
+    //         child: Card(
+    //           child: Container(
+    //             margin: EdgeInsets.all(8.0),
+    //             child: Column(
+    //               children: <Widget>[
+    //                 Text("Country: ${model.name.toString()}"),
+    //                 Text("Total Confirmed: ${model.email}"),
+    //                 Text("Total Deaths: ${model.mobile}"),
+    //                 Text("Total Recovered: ${model.gender}"),
+    //                 Text("jobCount: ${jobCount.toString()}"),
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
   }
 
   Widget _buildLoading() => Center(child: CircularProgressIndicator());
