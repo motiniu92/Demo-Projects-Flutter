@@ -1,4 +1,3 @@
-import 'package:auth_register/fetchData/dashboard_data_response_model.dart';
 import 'package:auth_register/fetchData/dashboard_event.dart';
 import 'package:auth_register/fetchData/dashboard_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
