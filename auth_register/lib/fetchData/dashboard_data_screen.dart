@@ -18,6 +18,7 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
   void initState() {
     super.initState();
     _dashboardBloc.add(GetDashboardDataList());
+    _dashboardBloc.add(GetDashboardCountData());
     super.initState();
   }
 
@@ -55,6 +56,18 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
                 return _buildLoading();
               } else if (state is DashboardLoaded) {
                 return _buildCard(context, state.dashboardDataResponse);
+              } else if (state is DashboardCountDataLoaded) {
+                return Center(
+                  child: Container(
+                    height: 100,
+                    child: Text(
+                      state.dashboardDataResponse.jobCount.toString(),
+                      style: TextStyle(
+                        fontSize: 35,
+                      ),
+                    ),
+                  ),
+                );
               } else if (state is DashboardError) {
                 return Container();
               } else {
@@ -72,6 +85,7 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
       itemCount: model.name.toString().length,
       itemBuilder: (context, index) {
         return Container(
+          height: 250,
           margin: EdgeInsets.all(8.0),
           child: Card(
             child: Container(
@@ -93,4 +107,3 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
 
   Widget _buildLoading() => Center(child: CircularProgressIndicator());
 }
-

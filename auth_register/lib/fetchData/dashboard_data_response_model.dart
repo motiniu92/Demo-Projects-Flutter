@@ -23,6 +23,11 @@ class DashboardDataResponse {
   Null? quizScore;
   String? createdAt;
   String? updatedAt;
+  //===============
+  int? jobCount;
+  int? nearByJobs;
+  int? myJobs;
+  //===============
 
   DashboardDataResponse(
       {this.id,
@@ -48,7 +53,11 @@ class DashboardDataResponse {
         this.emergencyTuition,
         this.quizScore,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+
+        this.jobCount,
+        this.nearByJobs,
+        this.myJobs});
 
   DashboardDataResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -75,6 +84,10 @@ class DashboardDataResponse {
     quizScore = json['quiz_score'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+
+    jobCount = json['job_count'];
+    nearByJobs = json['near_by_jobs'];
+    myJobs = json['my_jobs'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +116,10 @@ class DashboardDataResponse {
     data['quiz_score'] = this.quizScore;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+
+    data['job_count'] = this.jobCount;
+    data['near_by_jobs'] = this.nearByJobs;
+    data['my_jobs'] = this.myJobs;
     return data;
   }
 }

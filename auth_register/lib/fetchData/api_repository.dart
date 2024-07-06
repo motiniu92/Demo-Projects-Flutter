@@ -8,6 +8,12 @@ class ApiRepository {
   Future<DashboardDataResponse> fetchDashboardList() {
     return _provider.fetchDashboardList();
   }
+
+
+  Future<DashboardDataResponse> fetchDashboardCountData() {
+    return _provider.fetchDashboardCountData();
+  }
+
 }
 
 class NetworkError extends Error {}

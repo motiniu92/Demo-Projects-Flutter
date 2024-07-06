@@ -18,6 +18,14 @@ class DashboardLoaded extends DashboardState {
   const DashboardLoaded(this.dashboardDataResponse);
 }
 
+// ===============
+class DashboardCountDataLoaded extends DashboardState {
+  final DashboardDataResponse dashboardDataResponse;
+
+  const DashboardCountDataLoaded(this.dashboardDataResponse);
+}
+// ===============
+
 class DashboardError extends DashboardState {
   final String? message;
 
