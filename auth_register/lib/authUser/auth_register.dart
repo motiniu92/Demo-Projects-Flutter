@@ -7,7 +7,6 @@ import 'auth_event.dart';
 import 'auth_state.dart';
 import 'dropdown.dart';
 
-
 class AuthRegisterScreen extends StatefulWidget {
   @override
   State<AuthRegisterScreen> createState() => _AuthRegisterScreenState();
@@ -57,7 +56,10 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DashboardDataScreen()) );
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DashboardDataScreen()));
               },
               child: Text('Called Get Api'),
             ),
@@ -65,15 +67,6 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
             SizedBox(
               height: 20,
             ),
-
-            // GuardianTutorDropdown(
-            //   onChanged: (newValue) {
-            //     setState(() {
-            //       selectedGuardianTutor = newValue;
-            //       print("Dropdown...: "+selectedGuardianTutor!);
-            //     });
-            //   },
-            // ),
 
             // ------------- Name --------------
             BlocBuilder<AuthBloc, LoginState>(

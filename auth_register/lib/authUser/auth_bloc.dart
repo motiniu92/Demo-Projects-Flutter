@@ -16,12 +16,6 @@ class AuthBloc extends Bloc<AuthEvent, LoginState> {
     on<ConfirmPasswordChanged>(_onConfirmPasswordChanged);
     on<TutorTypeChanged>(_onTutorTypeChanged);
     on<LoginApi>(_onLoginApi);
-
-    // on<AuthEvent>((event, emit) {
-    //   on<EmailChanged>(_onEmailChanged);
-    //   on<PasswordChanged>(_onPasswordChanged);
-    //   on<LoginApi>(_onLoginApi);
-    // });
   }
 
   void _onNameChanged(NameChanged event, Emitter<LoginState> emit) {
@@ -79,54 +73,6 @@ class AuthBloc extends Bloc<AuthEvent, LoginState> {
         loginStatus: LoginStatus.loading,
       ),
     );
-
-    //---------------------------
-    //
-    //     final String apiUrl = 'https://api.softpark.xyz/api/register';
-    //
-    //     final response = await http.post(
-    //       Uri.parse(apiUrl),
-    //       body: jsonEncode({
-    //         'name': state.name,
-    //         'email': state.email,
-    //         'mobile':state.mobile,
-    //         'password':state.password,
-    //         'confirmPassword': state.confirmPassword,
-    //         'tutorType': state.tutorType,
-    //       }),
-    //      // headers: {'Content-Type': 'application/json'},
-    //     );
-    //     var resData = jsonDecode(response.body);
-    //     if (response.statusCode == 201) {
-    //       print('Registration Successful!');
-    //       print(response.body);
-    //       emit(
-    //         state.copyWith(
-    //           loginStatus: LoginStatus.success,
-    //           // message: "Login successful",
-    //           message: resData['message'],
-    //           //message: jsonData['message'],
-    //
-    //         ),
-    //       );
-    //
-    //     } else {
-    //       print('Registration Failed');
-    //       print(response.statusCode);
-    //       print(response.body);
-    //
-    //       emit(
-    //         state.copyWith(
-    //           loginStatus: LoginStatus.error,
-    //           message: resData['errors'],
-    //           // message: jsonData['errors'],
-    //
-    //         ),
-    //       );
-    //     }
-    //  // }
-
-    //---------------------------
 
     //Map data = {'name': state.name,'email': state.email, 'mobile': state.mobile, 'password': state.password, 'confirmPassword': state.confirmPassword, 'tutorType': state.tutorType};
     Map<String, dynamic> data = {
