@@ -9,5 +9,5 @@ abstract class DashboardEvent extends Equatable {
 
 class GetDashboardDataList extends DashboardEvent {}
 //------------------------
-class GetDashboardCountData extends DashboardEvent {}
+//class GetDashboardCountData extends DashboardEvent {}
 //---------------------------

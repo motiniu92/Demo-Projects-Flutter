@@ -19,11 +19,11 @@ class DashboardLoaded extends DashboardState {
 }
 
 // ===============
-class DashboardCountDataLoaded extends DashboardState {
-  final DashboardDataResponse dashboardDataResponse;
-
-  const DashboardCountDataLoaded(this.dashboardDataResponse);
-}
+// class DashboardCountDataLoaded extends DashboardState {
+//   final DashboardDataResponse dashboardDataResponse;
+//
+//   const DashboardCountDataLoaded(this.dashboardDataResponse);
+// }
 // ===============
 
 class DashboardError extends DashboardState {

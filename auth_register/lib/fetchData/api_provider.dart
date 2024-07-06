@@ -27,24 +27,24 @@ class ApiProvider {
   }
 
 //======================
-  final String _urlCounts = 'https://api.besttutor.xyz/api/tutor/count-job';
-
-  Future<DashboardDataResponse> fetchDashboardCountData() async {
-    final response = await http.get(
-      Uri.parse(_urlCounts),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
-      print("Auth Response Data Count......: " + jsonData.toString());
-      return DashboardDataResponse.fromJson(jsonData);
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
+//   final String _urlCounts = 'https://api.besttutor.xyz/api/tutor/count-job';
+//
+//   Future<DashboardDataResponse> fetchDashboardCountData() async {
+//     final response = await http.get(
+//       Uri.parse(_urlCounts),
+//       headers: {
+//         'Authorization': 'Bearer $token',
+//       },
+//     );
+//
+//     if (response.statusCode == 200) {
+//       final jsonData = jsonDecode(response.body);
+//       print("Auth Response Data Count......: " + jsonData.toString());
+//       return DashboardDataResponse.fromJson(jsonData);
+//     } else {
+//       throw Exception('Failed to load data');
+//     }
+//   }
   //=======================
 
 

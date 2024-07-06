@@ -2,9 +2,13 @@ import 'package:auth_register/fetchData/dashboard_bloc.dart';
 import 'package:auth_register/fetchData/dashboard_data_response_model.dart';
 import 'package:auth_register/fetchData/dashboard_event.dart';
 import 'package:auth_register/fetchData/dashboard_state.dart';
+import 'package:auth_register/multpleApiCalled/dashboard_count_event.dart';
+import 'package:auth_register/multpleApiCalled/dashboard_count_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../multpleApiCalled/dashboard_multiple_bloc.dart';
 
 class DashboardDataScreen extends StatefulWidget {
   @override
@@ -13,12 +17,13 @@ class DashboardDataScreen extends StatefulWidget {
 
 class _DashboardDataScreenState extends State<DashboardDataScreen> {
   final DashboardBloc _dashboardBloc = DashboardBloc();
+  final DashboardMultipleBloc _dashboardMultipleBloc = DashboardMultipleBloc();
 
   @override
   void initState() {
     super.initState();
     _dashboardBloc.add(GetDashboardDataList());
-    _dashboardBloc.add(GetDashboardCountData());
+    _dashboardMultipleBloc.add(GetDashboardMultipleApiData());
     super.initState();
   }
 
@@ -28,7 +33,57 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: _buildListCovid(),
+        body: Column(
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: BlocProvider(
+                create: (_) => _dashboardMultipleBloc,
+                child: BlocListener<DashboardMultipleBloc, DashboardCountState>(
+                  listener: (context, state) {
+                    if (state is DashboardCountError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message!),
+                        ),
+                      );
+                    }
+                  },
+                  child: BlocBuilder<DashboardMultipleBloc, DashboardCountState>(
+                    builder: (context, state) {
+                      if (state is DashboardCountInitial) {
+                        return _buildLoading();
+                      } else if (state is DashboardCountLoading) {
+                        return _buildLoading();
+                      } else if (state is DashboardCountMultipleDataLoaded) {
+                        return Container(
+                          width: 350,
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  Text(
+                                      state.dashboardDataResponse.jobCount.toString(), style: TextStyle(fontSize: 30),),
+                                  Text(
+                                      state.dashboardDataResponse.nearByJobs.toString(), style: TextStyle(fontSize: 30),),
+                                  Text(
+                                      state.dashboardDataResponse.myJobs.toString(), style: TextStyle(fontSize: 30),),
+                                ],
+                              ),
+                            ));
+                      } else if (state is DashboardCountError) {
+                        return Container();
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
+            _buildListCovid(),
+          ],
+        ),
       ),
     );
   }
@@ -56,18 +111,6 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
                 return _buildLoading();
               } else if (state is DashboardLoaded) {
                 return _buildCard(context, state.dashboardDataResponse);
-              } else if (state is DashboardCountDataLoaded) {
-                return Center(
-                  child: Container(
-                    height: 100,
-                    child: Text(
-                      state.dashboardDataResponse.jobCount.toString(),
-                      style: TextStyle(
-                        fontSize: 35,
-                      ),
-                    ),
-                  ),
-                );
               } else if (state is DashboardError) {
                 return Container();
               } else {
@@ -81,27 +124,29 @@ class _DashboardDataScreenState extends State<DashboardDataScreen> {
   }
 
   Widget _buildCard(BuildContext context, DashboardDataResponse model) {
-    return ListView.builder(
-      itemCount: model.name.toString().length,
-      itemBuilder: (context, index) {
-        return Container(
-          height: 250,
-          margin: EdgeInsets.all(8.0),
-          child: Card(
-            child: Container(
-              margin: EdgeInsets.all(8.0),
-              child: Column(
-                children: <Widget>[
-                  Text("Country: ${model.name.toString()}"),
-                  Text("Total Confirmed: ${model.email}"),
-                  Text("Total Deaths: ${model.mobile}"),
-                  Text("Total Recovered: ${model.gender}"),
-                ],
+    return Container(
+      height: 450,
+      child: ListView.builder(
+        itemCount: model.name.toString().length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: EdgeInsets.all(8.0),
+            child: Card(
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text("Country: ${model.name.toString()}"),
+                    Text("Total Confirmed: ${model.email}"),
+                    Text("Total Deaths: ${model.mobile}"),
+                    Text("Total Recovered: ${model.gender}"),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
