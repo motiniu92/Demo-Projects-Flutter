@@ -1,3 +1,4 @@
+import 'package:auth_register/dropdownListData/form_select_screen.dart';
 import 'package:auth_register/fetchData/dashboard_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,6 +55,20 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FormSelectScreen()));
+              },
+              child: Text('Form Select List'),
+            ),
+
+            SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
