@@ -3,6 +3,7 @@ import 'package:auth_register/fetchData/dashboard_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../dropdownListData/multi_select_dropdown_button.dart';
 import 'auth_bloc.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
