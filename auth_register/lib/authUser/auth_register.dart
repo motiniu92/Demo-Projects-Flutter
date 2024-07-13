@@ -1,5 +1,6 @@
 import 'package:auth_register/dropdownListData/form_select_screen.dart';
 import 'package:auth_register/fetchData/dashboard_data_screen.dart';
+import 'package:auth_register/jobPost/job_post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,27 +58,49 @@ class _AuthRegisterScreenState extends State<AuthRegisterScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FormSelectScreen()));
-              },
-              child: Text('Form Select List'),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => JobPostScreen()));
+                  },
+                  child: Text('Job Post Page'),
+                ),
+
+                SizedBox(
+                  width: 5,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FormSelectScreen()));
+                  },
+                  child: Text('Form Select List'),
+                ),
+
+              ],
             ),
 
             SizedBox(
-              height: 20,
+              height: 10,
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DashboardDataScreen()));
-              },
-              child: Text('Called Get Api'),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardDataScreen()));
+                  },
+                  child: Text('Called Get Api'),
+                ),
+              ],
             ),
 
             SizedBox(
