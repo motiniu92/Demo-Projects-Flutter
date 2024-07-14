@@ -16,8 +16,17 @@ class CategoriesIdChanged extends JobPostEvent {
   List<Object> get props => [categoriesId];
 }
 
+class CourseCategoriesIdChanged extends JobPostEvent {
+  const CourseCategoriesIdChanged({required this.courseCategoriesId});
+
+  final String courseCategoriesId;
+
+  @override
+  List<Object> get props => [courseCategoriesId];
+}
 
 class JobPostApi extends JobPostEvent {}
+
 //----------------------
 class JobPostClassCourseApi extends JobPostEvent {}
 //------------------------

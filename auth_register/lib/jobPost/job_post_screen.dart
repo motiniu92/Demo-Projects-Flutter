@@ -1,5 +1,4 @@
 import 'package:auth_register/dropdownListData/form_select_screen.dart';
-import 'package:auth_register/fetchData/dashboard_data_screen.dart';
 import 'package:auth_register/jobPost/course_multi_dropdown_select.dart';
 import 'package:auth_register/jobPost/job_post_bloc.dart';
 import 'package:auth_register/jobPost/job_post_event.dart';
@@ -7,10 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../authUser/dropdown.dart';
 import '../dropdownListData/multi_select_dropdown_button.dart';
 import 'job_post_state.dart';
-
 
 class JobPostScreen extends StatefulWidget {
   @override
@@ -39,7 +36,7 @@ class _JobPostScreenState extends State<JobPostScreen> {
     setState(() {
       // _counter = (prefs.getInt('counter') ?? 0);
       _courses = prefs.getString('course_list') as List;
-      print("Otp Screen Get Data..."+ _courses.toString());
+      print("Otp Screen Get Data..." + _courses.toString());
     });
   }
 
@@ -58,6 +55,7 @@ class _JobPostScreenState extends State<JobPostScreen> {
 
   List<dynamic> _selectedInstitutes = [];
   List<dynamic> _courses = [];
+  List<dynamic> _coursesCategory = [];
 
   @override
   Widget build(BuildContext context) {
@@ -90,40 +88,39 @@ class _JobPostScreenState extends State<JobPostScreen> {
               height: 20,
             ),
 
-
             // ------------- CategoryId --------------
             BlocBuilder<JobPostBloc, JobPostState>(
-              buildWhen: (current, previous) => current.categoriesId != previous.categoriesId,
+              buildWhen: (current, previous) =>
+                  current.categoriesId != previous.categoriesId,
               builder: (context, state) {
-                return  MultiSelectDropdownExample(
+                return MultiSelectDropdownExample(
                   selectedInstitutes: _selectedInstitutes,
                   onSelectionChanged: (newValue) {
-                    //onPressed: () {
-                    //context.read<JobPostBloc>().add(JobPostClassCourseApi());
-                   // };
-                   // context.read<JobPostBloc>().add(JobPostClassCourseApi());
-                    setState(() async {
+                    setState(() {
                       _selectedInstitutes = newValue;
-                      categoryId = _selectedInstitutes.map((item) => item['id']).join(',');
-                      print('Clicked....'+ _selectedInstitutes.map((item) => item['id']).join(','),);
-                      print('Clicked-2....'+ categoryId.toString());
+                      categoryId = _selectedInstitutes
+                          .map((item) => item['id'])
+                          .join(',');
+                      print(
+                        'Clicked....' +
+                            _selectedInstitutes
+                                .map((item) => item['id'])
+                                .join(','),
+                      );
+                      print('Clicked-2....' + categoryId.toString());
                       //submitJobPost();
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.setString('categories_id', categoryId.toString());
-                      context.read<JobPostBloc>().add(CategoriesIdChanged(categoriesId: _selectedInstitutes.map((item) => item['id']).join(','),));
+                      context.read<JobPostBloc>().add(CategoriesIdChanged(
+                            categoriesId: _selectedInstitutes
+                                .map((item) => item['id'])
+                                .join(','),
+                          ));
 
-                      //====================
-                      //onPressed: () {
                       context.read<JobPostBloc>().add(JobPostClassCourseApi());
-                     // };
-                      //====================
                     });
                   },
                 );
-
               },
             ),
-
 
             const SizedBox(
               height: 10,
@@ -132,35 +129,29 @@ class _JobPostScreenState extends State<JobPostScreen> {
             // ------------- Courses --------------
 
             BlocBuilder<JobPostBloc, JobPostState>(
-              buildWhen: (current, previous) => current.categoriesId != previous.categoriesId,
+              buildWhen: (current, previous) =>
+                  current.courseCategoriesId != previous.courseCategoriesId,
               builder: (context, state) {
-                return  CourseMultiDropdownSelect(
-                  selectedCourses: _courses,
+                return CourseMultiDropdownSelect(
+                  passListData: _courses,
+                  selectedCourses: _coursesCategory,
                   onSelectionChanged: (newValue) {
-
-                    setState(() async {
-                      _courses = newValue;
-                      //categoryId = _courses.map((item) => item['id']).join(',');
-                      print('Course dropdown....'+ _courses.map((item) => item['id']).join(','),);
-                      //print('Clicked-2....'+ categoryId.toString());
-                      //submitJobPost();
-                      //SharedPreferences prefs = await SharedPreferences.getInstance();
-                     // prefs.setString('categories_id', categoryId.toString());
+                    setState(() {
+                      _coursesCategory = newValue;
+                      print(
+                        'Course dropdown....' +
+                            _coursesCategory
+                                .map((item) => item['id'])
+                                .join(','),
+                      );
 
                       //context.read<JobPostBloc>().add(CategoriesIdChanged(categoriesId: _selectedInstitutes.map((item) => item['id']).join(','),));
-
-                      //====================
                       //context.read<JobPostBloc>().add(JobPostClassCourseApi());
-                      //====================
                     });
                   },
                 );
-
               },
             ),
-
-
-
 
             const SizedBox(
               height: 20,
@@ -192,15 +183,16 @@ class _JobPostScreenState extends State<JobPostScreen> {
                       SnackBar(content: Text(state.message.toString())),
                     );
                 }
-                print("Response Data Screen.......: " + state.message.toString());
+                print(
+                    "Response Data Screen.......: " + state.message.toString());
 
-                if(state is JobListDataLoaded){
-                  print('Check course list...'+ state.coursesList.toString());
+                if (state is JobListDataLoaded) {
+                  print('Check course list...' + state.coursesList.toString());
                   setState(() {
                     //loadCounter();
                     _courses = state.coursesList;
-                    print('Check course list-2...'+ state.coursesList.toString());
-
+                    print('Check course list-2...' +
+                        state.coursesList.toString());
                   });
                 }
               },
@@ -219,6 +211,8 @@ class _JobPostScreenState extends State<JobPostScreen> {
           ],
         ),
       ),
-    ));
+    )
+
+    );
   }
 }

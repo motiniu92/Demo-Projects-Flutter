@@ -6,22 +6,24 @@ enum JobPostStatus { initail, loading, success, error }
 class JobPostState extends Equatable {
   const JobPostState(
       {this.categoriesId = '',
-        this.message = '',
-        this.jobPostStatus = JobPostStatus.initail
-
-      });
+      this.courseCategoriesId = '',
+      this.message = '',
+      this.jobPostStatus = JobPostStatus.initail});
 
   final String categoriesId;
+  final String courseCategoriesId;
   final String message;
   final JobPostStatus jobPostStatus;
 
   JobPostState copyWith({
     String? categoriesId,
+    String? courseCategoriesId,
     String? message,
     JobPostStatus? jobPostStatus,
   }) {
     return JobPostState(
       categoriesId: categoriesId ?? this.categoriesId,
+      courseCategoriesId: courseCategoriesId ?? this.courseCategoriesId,
       message: message ?? this.message,
       jobPostStatus: jobPostStatus ?? this.jobPostStatus,
     );
@@ -29,19 +31,12 @@ class JobPostState extends Equatable {
 
   @override
   // TODO: implement props
-  List<Object?> get props => [
-    categoriesId,
-    message,
-    jobPostStatus
-  ];
+  List<Object?> get props =>
+      [categoriesId, courseCategoriesId, message, jobPostStatus];
 }
 
 class JobListDataLoaded extends JobPostState {
-  //final Categories formSelectResponseList;
   final List<dynamic> coursesList;
-  //final CourseResponse courseResponse;
 
-  //const JobListDataLoaded(this.courseResponse);
   const JobListDataLoaded(this.coursesList);
 }
-

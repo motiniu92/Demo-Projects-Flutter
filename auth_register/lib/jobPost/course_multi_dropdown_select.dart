@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/semantics.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
@@ -8,10 +7,14 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 class CourseMultiDropdownSelect extends StatefulWidget {
-  final List<dynamic> selectedCourses; // Added parameter
-  final Function(List<dynamic>) onSelectionChanged; // Added parameter
+   // Added parameter
+  final List<dynamic> passListData;
+  final List<dynamic> selectedCourses;
+  final Function(List<dynamic>) onSelectionChanged;
 
+  // Constructor
   CourseMultiDropdownSelect({
+    required this.passListData,
     required this.selectedCourses,
     required this.onSelectionChanged,
   });
@@ -29,13 +32,13 @@ class _CourseMultiDropdownSelectState
   void initState() {
     super.initState();
     //_fetchInstitutes();
+
+    print('Get List Data...:'+ _coursesList.toString());
+    print('Get List Data-1...:'+ widget.passListData.toString());
   }
 
   Future<void> _fetchInstitutes() async {
 
-    //------------------------
-    //final url = 'https://api.softpark.xyz/api/institute';
-    //---------------------------
     final url = 'https://api.besttutor.xyz/api/get-form-select-data';
 
     try {
@@ -65,11 +68,13 @@ class _CourseMultiDropdownSelectState
 
   @override
   Widget build(BuildContext context) {
+    print('Get List Data-2...:'+ widget.passListData.toString());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MultiSelectDialogField(
-          items: _coursesList
+          //items: _coursesList
+          items: widget.passListData
               .map((institute) =>
               MultiSelectItem<dynamic>(institute, institute['name']))
               .toList(),
@@ -84,8 +89,8 @@ class _CourseMultiDropdownSelectState
             print('Change..:'+results.toString());
           },
 
-          title: Text('Select Institutes'),
-          buttonText: Text('Select Institutes'),
+          title: Text('Select Course'),
+          buttonText: Text('Select Course'),
 
           chipDisplay: MultiSelectChipDisplay(
             onTap: (value) {
@@ -99,7 +104,7 @@ class _CourseMultiDropdownSelectState
         ),
         SizedBox(height: 20),
         Text(
-          'Selected Institutes: ${widget.selectedCourses.map((item) => item['name']).join(', ')}',
+          'Selected Category Course: ${widget.selectedCourses.map((item) => item['name']).join(', ')}',
           style: TextStyle(fontSize: 16),
         ),
       ],
